@@ -1,0 +1,23 @@
+;;run: sbcl --script merge_sort.lsp
+(defun single (sequence)
+  (if (consp sequence)
+      (not (cdr sequence))
+      (= (length sequence) 1)))
+
+(defun merge_sort (sequence)
+  (if (or (null sequence) (single sequence))
+      sequence
+      (let ((half (truncate (/ (length sequence) 2))))
+        (merge (type-of sequence)
+               (merge_sort (subseq sequence 0 half))
+               (merge_sort (subseq sequence half))
+               #'<))))
+(defvar len)
+(defvar a)
+(format t "Enter an integer for length of list: ~%")
+(setq len (read))
+(setq a (read-from-string (concatenate 'string "(" (read-line) ")")))
+(if (= (length a) len)
+  (format t "~{~A ~}~%" (merge_sort a))
+  (print "wrong list!")
+)
