@@ -1,9 +1,11 @@
 ﻿#include <cstdlib>
+#include <square/square.h>
 #include <nana/gui.hpp>
 #include <nana/gui/widgets/label.hpp>
 #include <nana/gui/widgets/button.hpp>
 #include <nana/gui/widgets/textbox.hpp>
 #include <fmt/format.h>
+
 
 int main()
 {
@@ -18,14 +20,15 @@ int main()
     button btn{fm, u8"算!"};
     btn.events().click([&fm, &text]{
         auto val = atoi(text.caption().c_str());
-        
+        auto ans = Square((int)val);
+
         auto msg = msgbox(fm, u8"計算結果");
-        (msg<<fmt::format("{0}*{0}={1}", val, val*val)).show();
+        (msg<<fmt::format("{0}*{0}={1}", val, ans)).show();
 
     });
 
     fm.events().unload([&fm] {
-        
+
         auto msg = msgbox(fm, u8"重要問題?", msgbox::yes_no);
         msg<<u8"胡老師美嗎?";
         do {
@@ -35,7 +38,7 @@ int main()
             msg2.icon(msgbox::icon_information);
             (msg2<<u8"當學生要誠實").show();
         } while(true);
-    
+
     });
 
     //Layout management
@@ -43,7 +46,7 @@ int main()
     fm["text"]<<text;
     fm["button"] << btn;
     fm.collocate();
-	
+
     //Show the form
     fm.show();
 
