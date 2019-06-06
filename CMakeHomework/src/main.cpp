@@ -14,7 +14,7 @@ int main()
     //Define a form.
     form fm;
 
-    textbox text = nana::textbox(fm);
+    textbox text(fm);
 
     //Define a button and answer the click event.
     button btn{fm, u8"算!"};
